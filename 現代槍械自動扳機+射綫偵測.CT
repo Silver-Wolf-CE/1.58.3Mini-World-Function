@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1807689737</ID>
+      <Description>"現在的幀數上限"</Description>
+      <ShowAsSigned>1</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>libEngine.dll+1512948</Address>
+      <Offsets>
+        <Offset>3F0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689712</ID>
+      <Description>"射綫偵測結果(0無,1墻體,2目標)"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>libSandboxGame.dll+3E09C08</Address>
+      <Offsets>
+        <Offset>88</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807637903</ID>
+      <Description>"1.58.3 現代槍械 X64"</Description>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1807637894</ID>
+          <Description>"全自動模式+ 無後座 + 無擴散"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,libSandboxGame.dll+23F9820)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+mov [rax+1C],0
+mov [rax+A0],0
+mov [rax+A4],0
+mov [rax+B4],0
+mov [rax+C4],0
+mov [rax+150],0
+mov [rax+218],0
+mov [rax+27C],0
+cmp dword ptr [rax+1C],02
+je libSandboxGame.dll+23F9839
+exit:
+jmp returnhere
+libSandboxGame.dll+23F9820:
+jmp newmem
+nop
+returnhere:
+[DISABLE]
+dealloc(newmem)
+libSandboxGame.dll+23F9820:
+db 83 78 1C 02 74 13
+//cmp dword ptr [rax+1C],02
+//je libSandboxGame.dll+23F9839
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637895</ID>
+          <Description>"迅速裝填"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,libSandboxGame.dll+23D76D2)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+mov [rax+6C],0
+mov [rax+70],0
+mov [rax+74],0
+mov [rax+78],0
+mov [rax+7C],0
+mov [rax+80],0
+mov [rax+84],0
+mov [rax+88],0
+mov [rax+8C],0
+mov [rax+27C],0
+cmp dword ptr [rax+68],01
+mov [rsp+30],rbx
+exit:
+jmp returnhere
+libSandboxGame.dll+23D76D2:
+jmp newmem
+nop 4
+returnhere:
+[DISABLE]
+dealloc(newmem)
+libSandboxGame.dll+23D76D2:
+db 83 78 68 01 48 89 5C 24 30
+//cmp dword ptr [rax+68],01
+//mov [rsp+30],rbx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637896</ID>
+          <Description>"超遠射擊距離 + 攻擊力不衰減 + 穿透力提升"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,libSandboxGame.dll+23D2F3B)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+mov [rax+34],461C3C00
+mov [rax+48],3F800000
+mov [rax+4C],#9999
+mov [rax+54],0
+mov [rax+58],0
+movss xmm0,[rax+34]
+exit:
+jmp returnhere
+libSandboxGame.dll+23D2F3B:
+jmp newmem
+returnhere:
+[DISABLE]
+dealloc(newmem)
+libSandboxGame.dll+23D2F3B:
+db F3 0F 10 40 34
+//movss xmm0,[rax+34]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637898</ID>
+          <Description>"射擊穩定"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+libSandboxGame.dll+24185FD:
+DB EB
+[DISABLE]
+libSandboxGame.dll+24185FD:
+DB 74
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637901</ID>
+          <Description>"準星無擴散"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,libSandboxGame.dll+23D4BD9)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+mov [rbx+00000110],0
+mov [rbx+0000010C],0
+movss xmm1,[rbx+00000110]
+exit:
+jmp returnhere
+libSandboxGame.dll+23D4BD9:
+jmp newmem
+nop 3
+returnhere:
+[DISABLE]
+dealloc(newmem)
+libSandboxGame.dll+23D4BD9:
+db F3 0F 10 8B 10 01 00 00
+//movss xmm1,[rbx+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637902</ID>
+          <Description>"射擊子彈穿過墻體"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+libSandboxGame.dll+23D989F:
+jmp libSandboxGame.dll+23D9DF1
+nop
+[DISABLE]
+libSandboxGame.dll+23D989F:
+je libSandboxGame.dll+23D9DF1
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807637893</ID>
+          <Description>"射擊不回復"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+libSandboxGame.dll+23D627E:
+jmp libSandboxGame.dll+23D6309
+nop
+[DISABLE]
+libSandboxGame.dll+23D627E:
+je libSandboxGame.dll+23D6309
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689740</ID>
+          <Description>"整理射綫距離與方向"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,"libSandboxEngine.dll"+822D24) 
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(Xzhou,8)
+registersymbol(Xzhou)
+alloc(Yzhou,8)
+registersymbol(Yzhou)
+alloc(Zzhou,8)
+registersymbol(Zzhou)
+newmem:
+originalcode:
+PUSH RAX
+PUSH RBX
+PUSH RCX
+mov rax,[Xzhou]
+mov rbx,[Yzhou]
+mov rcx,[Zzhou]
+mov [rbp-05],RAX//X轴矩阵角
+mov [rbp-01],RBX//Y轴矩阵角
+mov [rbp+03],RCX//Z轴矩阵角
+mov [rbp+07],4CABA950//距离
+POP RCX
+POP RBX
+POP RAX
+movss xmm3,[rbp+07]
+exit:
+jmp returnhere
+"libSandboxEngine.dll"+822D24:
+jmp newmem
+returnhere:
+[DISABLE]
+unregistersymbol(Xzhou)
+dealloc(Xzhou)
+unregistersymbol(Yzhou)
+dealloc(Yzhou)
+unregistersymbol(Zzhou)
+dealloc(Zzhou)
+dealloc(newmem)
+"libSandboxEngine.dll"+822D24:
+db F3 0F 10 5D 07
+//movss xmm3,[rbp+07]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1807689751</ID>
+              <Description>"射綫X軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Xzhou</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689753</ID>
+              <Description>"射綫Y軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Yzhou</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689752</ID>
+              <Description>"射綫Z軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Zzhou</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689743</ID>
+          <Description>"現代槍械靜默自動瞄準(初始化)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,libSandboxGame.dll+23D877C)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(angle1,4)
+alloc(angle2,4)
+alloc(angle3,4)
+registersymbol(angle1)
+registersymbol(angle2)
+registersymbol(angle3)
+newmem:
+originalcode:
+movss [rbx+rdi+18],xmm1
+push r8
+push r9
+push r10
+mov r8d,[angle1]
+mov r9d,[angle2]
+mov r10d,[angle3]
+mov [rbx+rdi+C],R8d
+mov [rbx+rdi+10],R9d
+mov [rbx+rdi+14],R10d
+pop r10
+pop r9
+pop r8
+exit:
+jmp returnhere
+libSandboxGame.dll+23D877C:
+jmp newmem
+nop
+returnhere:
+alloc(Fire,80)
+registersymbol(Fire)
+Fire:
+push rax
+push rbx
+push rcx
+push rdx
+push r8
+push r9
+push r10
+push r11
+lea rsp,[rsp-28]
+mov edx,1
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rcx,[rbx+EC0]
+neg edx
+call libSandboxGame.dll+23D7330
+lea rsp,[rsp+28]
+lea rsp,[rsp-28]
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rcx,[rbx+EC0]
+mov edx,[rbx+00000084]
+call libSandboxGame.dll+23D81A0
+lea rsp,[rsp+28]
+pop r11
+pop r10
+pop r9
+pop r8
+pop rdx
+pop rcx
+pop rbx
+pop rax
+ret
+[DISABLE]
+unregistersymbol(Fire)
+dealloc(Fire)
+unregistersymbol(angle1)
+unregistersymbol(angle2)
+unregistersymbol(angle3)
+dealloc(angle1)
+dealloc(angle2)
+dealloc(angle3)
+dealloc(newmem)
+libSandboxGame.dll+23D877C:
+db F3 0F 11 4C 3B 18
+//movss [rbx+rdi+18],xmm1
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1807689766</ID>
+              <Description>"不偵測墻體"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+libSandboxEngine.dll+10F19CB:
+jmp libSandboxEngine.dll+10F1AD5
+nop
+[DISABLE]
+libSandboxEngine.dll+10F19CB:
+je libSandboxEngine.dll+10F1AD5
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689761</ID>
+              <Description>"暴力瞄準"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$Lua}
+if syntaxcheck then return end
+
+[ENABLE]
+if _aim_index == nil then
+  _aim_index = 1
+end
+
+-- 分開的Yaw和Pitch地址
+local YAW_ADDRESS = "[[libSandboxGame.dll+3E09C08]+20]+8"   -- Yaw角度地址
+local PITCH_ADDRESS = "[[libSandboxGame.dll+3E09C08]+20]+C"  -- Pitch角度地址
+
+LeftsuperLuaAutoClickForTriggerbot_thread = createNativeThread(function (thread)
+  thread.freeOnTerminate(false)
+  thread.Name = 'Aimbot_thread'
+
+  -- 緩存玩家信息，減少重複讀取
+  local cachedSelfFaction = nil
+  local cachedPlayerX, cachedPlayerY, cachedPlayerZ = nil, nil, nil
+  local lastCacheUpdate = 0
+
+  -- 緩存敵人列表，減少讀取
+  local cachedPlayerList = nil
+  local cachedEnemyCount = nil
+
+  while not thread.Terminated do
+    -- 獲取敵人數量（緩存優化）
+    local enemyCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+
+    -- 檢查是否有有效敵人
+    if enemyCount and enemyCount &gt; 1 then
+      -- 定期更新緩存（每100ms）
+      local currentTime = getTickCount()
+      if currentTime - lastCacheUpdate &gt; 1 then
+        -- 更新玩家陣營緩存
+        local SelfCampPtr = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+340")
+        if SelfCampPtr and SelfCampPtr ~= 0 then
+          cachedSelfFaction = readInteger(SelfCampPtr + 0x38) or 0
+        else
+          cachedSelfFaction = 0
+        end
+
+        -- 更新玩家位置緩存（直接讀取有符號整數）
+        local playerBase = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+150")
+        if playerBase then
+          cachedPlayerX = readInteger(playerBase + 0x2C8, true) or 0
+          cachedPlayerY = readInteger(playerBase + 0x2CC, true) or 0
+          cachedPlayerZ = readInteger(playerBase + 0x2D0, true) or 0
+        end
+
+        -- 更新敵人列表緩存
+        cachedPlayerList = readQword("[[[[[libSandboxEngine.dll+1C3FE30]+240]+0]+28]+1F0]+38")
+        cachedEnemyCount = enemyCount
+
+        lastCacheUpdate = currentTime
+      end
+
+      -- 檢查緩存是否有效
+      if cachedPlayerList and cachedPlayerList ~= 0 then
+        local foundValidEnemy = false
+
+        -- 嘗試尋找有效敵人（最多嘗試5個）
+        local attempts = 0
+        local maxCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+        local maxAttempts = math.min(enemyCount, maxCount)
+
+        while not foundValidEnemy and attempts &lt; maxAttempts and not thread.Terminated do
+          local enemyInstance = readQword(cachedPlayerList + _aim_index * 8)
+
+          if enemyInstance and enemyInstance ~= 0 then
+            -- 血量判斷
+            local EnemyHPPtr = readQword(enemyInstance + 0x220)
+            local EnemyHP = 100.0
+
+            if EnemyHPPtr and EnemyHPPtr ~= 0 then
+              EnemyHP = readFloat(EnemyHPPtr + 0x38) or 100.0
+            end
+
+            if EnemyHP &gt; 0.00 then
+              -- 陣營判斷
+              local EnemyCampPtr = readQword(enemyInstance + 0x340)
+              local EnemyFaction = 0
+
+              if EnemyCampPtr and EnemyCampPtr ~= 0 then
+                EnemyFaction = readInteger(EnemyCampPtr + 0x38) or 0
+              end
+
+              local shouldAim = false
+
+              if cachedSelfFaction == 0 then
+                shouldAim = true
+              elseif EnemyFaction ~= cachedSelfFaction then
+                shouldAim = true
+              end
+
+              -- 角度計算
+              if shouldAim then
+                local locationPtr = readQword(enemyInstance + 0x150)
+
+                if locationPtr and locationPtr ~= 0 then
+                  -- 直接讀取有符號整數
+                  local enemyX = readInteger(locationPtr + 0x2C8, true) or 0
+                  local enemyY = readInteger(locationPtr + 0x2CC, true) or 0
+                  local enemyZ = readInteger(locationPtr + 0x2D0, true) or 0
+
+                  -- 使用緩存的玩家位置
+                  if cachedPlayerX and cachedPlayerY and cachedPlayerZ then
+                    -- 計算相對位置
+                    local dx = enemyX - cachedPlayerX
+                    local dz = enemyZ - cachedPlayerZ
+                    local dy = enemyY - cachedPlayerY
+
+                    -- 計算水平距離平方（避免開方運算）
+                    local horizontalDist2 = dx*dx + dz*dz
+
+                    -- 設置最小距離閾值（避免零距離）
+                    if horizontalDist2 &gt; 1 then
+                      local horizontalDist = math.sqrt(horizontalDist2)
+
+                      -- 快速計算角度
+                      local aimYaw = math.atan2(dx, dz) * (180.0 / math.pi)
+                      if aimYaw &lt; 0 then
+                        aimYaw = aimYaw + 360.0
+                      end
+                      aimYaw = aimYaw % 360.0
+
+                      local aimPitch = -math.atan2(dy, horizontalDist) * (180.0 / math.pi)
+
+                      -- 限制Pitch範圍
+                      if aimPitch &lt; -88.0 then aimPitch = -88.0 end
+                      if aimPitch &gt; 88.0 then aimPitch = 88.0 end
+
+                      -- 直接寫入角度
+                      writeFloat(YAW_ADDRESS, aimYaw)
+                      writeFloat(PITCH_ADDRESS, aimPitch)
+                      foundValidEnemy = true
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+          -- 切換到下一個目標
+          _aim_index = _aim_index + 1
+          if _aim_index &gt;= cachedEnemyCount then
+            _aim_index = 1
+          end
+
+          attempts = attempts + 1
+        end
+      end
+    end
+  end
+end)
+
+[DISABLE]
+if LeftsuperLuaAutoClickForTriggerbot_thread then
+  LeftsuperLuaAutoClickForTriggerbot_thread.terminate()
+  LeftsuperLuaAutoClickForTriggerbot_thread.waitfor()
+  LeftsuperLuaAutoClickForTriggerbot_thread.destroy()
+  LeftsuperLuaAutoClickForTriggerbot_thread = nil
+  _aim_index = nil
+end
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689762</ID>
+              <Description>"自動瞄準運算角度+自動扳機(優化)"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$Lua}
+if syntaxcheck then return end
+
+[ENABLE]
+if _aim_index == nil then
+  _aim_index = 1
+end
+
+LeftsuperLuaAutoClickForTriggerbot_thread = createNativeThread(function (thread)
+  thread.freeOnTerminate(false)
+  thread.Name = 'Aimbot_thread'
+
+  while not thread.Terminated do
+    -- 获取敌人数量
+    local enemyCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+
+    -- 检查是否有有效敌人
+    if enemyCount and enemyCount &gt; 1 then
+      -- 实时读取玩家阵营
+      local SelfCampPtr = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+340")
+      local cachedSelfFaction = 0
+      if SelfCampPtr and SelfCampPtr ~= 0 then
+        cachedSelfFaction = readInteger(SelfCampPtr + 0x38) or 0
+      end
+
+      -- 实时读取玩家位置
+      local playerBase = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+150")
+      local cachedPlayerX, cachedPlayerY, cachedPlayerZ = nil, nil, nil
+      if playerBase then
+        cachedPlayerX = readInteger(playerBase + 0x2C8, true) or 0
+        cachedPlayerY = readInteger(playerBase + 0x2CC, true) or 0
+        cachedPlayerZ = readInteger(playerBase + 0x2D0, true) or 0
+      end
+
+      -- 实时读取敌人列表
+      local cachedPlayerList = readQword("[[[[[libSandboxEngine.dll+1C3FE30]+240]+0]+28]+1F0]+38")
+
+      if cachedPlayerList and cachedPlayerList ~= 0 then
+        local foundValidEnemy = false
+        local attempts = 0
+        local maxCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+        local maxAttempts = math.min(enemyCount, maxCount)
+
+        while not foundValidEnemy and attempts &lt; maxAttempts and not thread.Terminated do
+          local enemyInstance = readQword(cachedPlayerList + _aim_index * 8)
+
+          if enemyInstance and enemyInstance ~= 0 then
+            -- 血量判断
+            local EnemyHPPtr = readQword(enemyInstance + 0x220)
+            local EnemyHP = 100.0
+
+            if EnemyHPPtr and EnemyHPPtr ~= 0 then
+              EnemyHP = readFloat(EnemyHPPtr + 0x38) or 100.0
+            end
+
+            if EnemyHP &gt; 0.00 then
+              -- 阵营判断
+              local EnemyCampPtr = readQword(enemyInstance + 0x340)
+              local EnemyFaction = 0
+
+              if EnemyCampPtr and EnemyCampPtr ~= 0 then
+                EnemyFaction = readInteger(EnemyCampPtr + 0x38) or 0
+              end
+
+              local shouldAim = false
+
+              if cachedSelfFaction == 0 then
+                shouldAim = true
+              elseif EnemyFaction ~= cachedSelfFaction then
+                shouldAim = true
+              end
+
+              if shouldAim then
+                local locationPtr = readQword(enemyInstance + 0x150)
+
+                if locationPtr and locationPtr ~= 0 then
+                  local enemyX = readInteger(locationPtr + 0x2C8, true) or 0
+                  local enemyY = readInteger(locationPtr + 0x2CC, true) or 0
+                  local enemyZ = readInteger(locationPtr + 0x2D0, true) or 0
+
+                  if cachedPlayerX and cachedPlayerY and cachedPlayerZ then
+                    local dx = enemyX - cachedPlayerX
+                    local dy = enemyY - cachedPlayerY
+                    local dz = enemyZ - cachedPlayerZ
+
+                    local dist = math.sqrt(dx*dx + dy*dy + dz*dz)
+
+                    local a = dx / dist
+                    local b = dy / dist
+                    local c = dz / dist
+
+                    writeFloat("Xzhou", a)
+                    writeFloat("Yzhou", b)
+                    writeFloat("Zzhou", c)
+                    writeFloat("angle1", a)
+                    writeFloat("angle2", b)
+                    writeFloat("angle3", c)
+          sleep(1)
+                    foundValidEnemy = true
+                  end
+                end
+              end
+            end
+          end
+          _aim_index = _aim_index + 1
+          if _aim_index &gt;= enemyCount then
+            _aim_index = 1
+          end
+          attempts = attempts + 1
+        end
+      end
+    end
+  end
+end)
+
+[DISABLE]
+if LeftsuperLuaAutoClickForTriggerbot_thread then
+  LeftsuperLuaAutoClickForTriggerbot_thread.terminate()
+  LeftsuperLuaAutoClickForTriggerbot_thread.waitfor()
+  LeftsuperLuaAutoClickForTriggerbot_thread.destroy()
+  LeftsuperLuaAutoClickForTriggerbot_thread = nil
+  _aim_index = nil
+end
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689763</ID>
+              <Description>"自動瞄準運算角度"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$Lua}
+if syntaxcheck then return end
+
+[ENABLE]
+if _aim_index == nil then
+  _aim_index = 1
+end
+
+-- 分開的Yaw和Pitch地址
+LeftsuperLuaAutoClickForTriggerbot_thread = createNativeThread(function (thread)
+  thread.freeOnTerminate(false)
+  thread.Name = 'Aimbot_thread'
+
+  -- 緩存玩家信息，減少重複讀取
+  local cachedSelfFaction = nil
+  local cachedPlayerX, cachedPlayerY, cachedPlayerZ = nil, nil, nil
+  local lastCacheUpdate = 0
+
+  -- 緩存敵人列表，減少讀取
+  local cachedPlayerList = nil
+  local cachedEnemyCount = nil
+
+  while not thread.Terminated do
+    -- 獲取敵人數量（緩存優化）
+    local enemyCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+
+    -- 檢查是否有有效敵人
+    if enemyCount and enemyCount &gt; 1 then
+      -- 定期更新緩存（每100ms）
+      local currentTime = getTickCount()
+      if currentTime - lastCacheUpdate &gt; 1 then
+        -- 更新玩家陣營緩存
+        local SelfCampPtr = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+340")
+        if SelfCampPtr and SelfCampPtr ~= 0 then
+          cachedSelfFaction = readInteger(SelfCampPtr + 0x38) or 0
+        else
+          cachedSelfFaction = 0
+        end
+
+        -- 更新玩家位置緩存（直接讀取有符號整數）
+        local playerBase = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+150")
+        if playerBase then
+          cachedPlayerX = readInteger(playerBase + 0x2C8, true) or 0
+          cachedPlayerY = readInteger(playerBase + 0x2CC, true) or 0
+          cachedPlayerZ = readInteger(playerBase + 0x2D0, true) or 0
+        end
+
+        -- 更新敵人列表緩存
+        cachedPlayerList = readQword("[[[[[libSandboxEngine.dll+1C3FE30]+240]+0]+28]+1F0]+38")
+        cachedEnemyCount = enemyCount
+
+        lastCacheUpdate = currentTime
+      end
+
+      -- 檢查緩存是否有效
+      if cachedPlayerList and cachedPlayerList ~= 0 then
+        local foundValidEnemy = false
+
+        -- 嘗試尋找有效敵人（最多嘗試5個）
+        local attempts = 0
+        local maxCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+        local maxAttempts = math.min(enemyCount, maxCount)
+
+        while not foundValidEnemy and attempts &lt; maxAttempts and not thread.Terminated do
+          local enemyInstance = readQword(cachedPlayerList + _aim_index * 8)
+
+          if enemyInstance and enemyInstance ~= 0 then
+            -- 血量判斷
+            local EnemyHPPtr = readQword(enemyInstance + 0x220)
+            local EnemyHP = 100.0
+
+            if EnemyHPPtr and EnemyHPPtr ~= 0 then
+              EnemyHP = readFloat(EnemyHPPtr + 0x38) or 100.0
+            end
+
+            if EnemyHP &gt; 0.00 then
+              -- 陣營判斷
+              local EnemyCampPtr = readQword(enemyInstance + 0x340)
+              local EnemyFaction = 0
+
+              if EnemyCampPtr and EnemyCampPtr ~= 0 then
+                EnemyFaction = readInteger(EnemyCampPtr + 0x38) or 0
+              end
+
+              local shouldAim = false
+
+              if cachedSelfFaction == 0 then
+                shouldAim = true
+              elseif EnemyFaction ~= cachedSelfFaction then
+                shouldAim = true
+              end
+
+              -- 直接用坐标和距离算 (a, b, c)
+              if shouldAim then
+                local locationPtr = readQword(enemyInstance + 0x150)
+
+                if locationPtr and locationPtr ~= 0 then
+                  -- 直接讀取有符號整數
+                  local enemyX = readInteger(locationPtr + 0x2C8, true) or 0
+                  local enemyY = readInteger(locationPtr + 0x2CC, true) or 0
+                  local enemyZ = readInteger(locationPtr + 0x2D0, true) or 0
+
+                  -- 使用緩存的玩家位置
+                  if cachedPlayerX and cachedPlayerY and cachedPlayerZ then
+                    -- 計算相對位置
+                    local dx = enemyX - cachedPlayerX
+                    local dy = enemyY - cachedPlayerY
+                    local dz = enemyZ - cachedPlayerZ
+
+                    -- 計算總距離
+                    local dist = math.sqrt(dx*dx + dy*dy + dz*dz)
+
+                    -- 直接算 (a, b, c)
+                    local a = dx / dist
+                    local b = dy / dist
+                    local c = dz / dist
+
+                    -- 寫入三組值
+                    writeFloat("angle1", a)
+                    writeFloat("angle2", b)
+                    writeFloat("angle3", c)
+                    sleep(1)
+                    foundValidEnemy = true
+                  end
+                end
+              end
+            end
+          end
+
+          -- 切換到下一個目標
+          _aim_index = _aim_index + 1
+          if _aim_index &gt;= cachedEnemyCount then
+            _aim_index = 1
+          end
+
+          attempts = attempts + 1
+        end
+      end
+    end
+  end
+end)
+
+[DISABLE]
+if LeftsuperLuaAutoClickForTriggerbot_thread then
+  LeftsuperLuaAutoClickForTriggerbot_thread.terminate()
+  LeftsuperLuaAutoClickForTriggerbot_thread.waitfor()
+  LeftsuperLuaAutoClickForTriggerbot_thread.destroy()
+  LeftsuperLuaAutoClickForTriggerbot_thread = nil
+  _aim_index = nil
+end
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689764</ID>
+              <Description>"更優的自動扳機(判斷友軍)"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048,"libSandboxEngine.dll"+822ED7) 
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+cmp rax,2
+jne tuichu
+push rax
+push rbx
+push rcx
+push rdx
+push r8
+push r9
+push r10
+push r11
+push rdi
+lea rsp,[rsp-28]
+mov edx,1
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rcx,[rbx+EC0]
+cmp [rcx+38],0
+je fangbeng
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rbx,[rbx+720]
+cmp rbx,0
+je fangbeng
+MOV r11,libSandboxGame.dll+3E09C08
+MOV r11,[r11]
+MOV r11,[r11+1A0]
+mov r11,[r11+340]
+mov r11,[r11+38]//自己
+mov rbx,[rbx+340]
+cmp  dword ptr [rbx+38],r11d
+je fangbeng//当自己和射线检测函数的阵营值相同时候跳过,也把自己与别人为0的时候也跳过开枪
+neg edx
+call libSandboxGame.dll+23D7330
+lea rsp,[rsp+28]
+lea rsp,[rsp-28]
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rcx,[rbx+EC0]
+mov edx,[rbx+00000084]
+call libSandboxGame.dll+23D81A0
+fangbeng:
+lea rsp,[rsp+28]
+pop rdi
+pop r11
+pop r10
+pop r9
+pop r8
+pop rdx
+pop rcx
+pop rbx
+pop rax
+tuichu:
+lea r11,[rsp+000000A0]
+exit:
+jmp returnhere
+"libSandboxEngine.dll"+822ED7:
+jmp newmem
+nop 3
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"libSandboxEngine.dll"+822ED7:
+db 4C 8D 9C 24 A0 00 00 00
+//lea r11,[rsp+000000A0]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807637582</ID>
+              <Description>"自動瞄準運算角度+自動扳機(會判斷墻體,不使用射擊函式,與"更優自動班機組合")"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$Lua}
+if syntaxcheck then return end
+
+[ENABLE]
+if _aim_index == nil then
+  _aim_index = 1
+end
+
+-- 分開的Yaw和Pitch地址
+LeftsuperLuaAutoClickForTriggerbot_thread = createNativeThread(function (thread)
+  thread.freeOnTerminate(false)
+  thread.Name = 'Aimbot_thread'
+
+  -- 緩存玩家信息，減少重複讀取
+  local cachedSelfFaction = nil
+  local cachedPlayerX, cachedPlayerY, cachedPlayerZ = nil, nil, nil
+  local lastCacheUpdate = 0
+
+  -- 緩存敵人列表，減少讀取
+  local cachedPlayerList = nil
+  local cachedEnemyCount = nil
+
+  while not thread.Terminated do
+    -- 獲取敵人數量（緩存優化）
+    local enemyCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+
+    -- 檢查是否有有效敵人
+    if enemyCount and enemyCount &gt; 1 then
+      -- 定期更新緩存（每100ms）
+      local currentTime = getTickCount()
+      if currentTime - lastCacheUpdate &gt; 1 then
+        -- 更新玩家陣營緩存
+        local SelfCampPtr = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+340")
+        if SelfCampPtr and SelfCampPtr ~= 0 then
+          cachedSelfFaction = readInteger(SelfCampPtr + 0x38) or 0
+        else
+          cachedSelfFaction = 0
+        end
+
+        -- 更新玩家位置緩存（直接讀取有符號整數）
+        local playerBase = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+150")
+        if playerBase then
+          cachedPlayerX = readInteger(playerBase + 0x2C8, true) or 0
+          cachedPlayerY = readInteger(playerBase + 0x2CC, true) or 0
+          cachedPlayerZ = readInteger(playerBase + 0x2D0, true) or 0
+        end
+
+        -- 更新敵人列表緩存
+        cachedPlayerList = readQword("[[[[[libSandboxEngine.dll+1C3FE30]+240]+0]+28]+1F0]+38")
+        cachedEnemyCount = enemyCount
+
+        lastCacheUpdate = currentTime
+      end
+
+      -- 檢查緩存是否有效
+      if cachedPlayerList and cachedPlayerList ~= 0 then
+        local foundValidEnemy = false
+
+        -- 嘗試尋找有效敵人（最多嘗試5個）
+        local attempts = 0
+        local maxCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+        local maxAttempts = math.min(enemyCount, maxCount)
+
+        while not foundValidEnemy and attempts &lt; maxAttempts and not thread.Terminated do
+          local enemyInstance = readQword(cachedPlayerList + _aim_index * 8)
+
+          if enemyInstance and enemyInstance ~= 0 then
+            -- 血量判斷
+            local EnemyHPPtr = readQword(enemyInstance + 0x220)
+            local EnemyHP = 100.0
+
+            if EnemyHPPtr and EnemyHPPtr ~= 0 then
+              EnemyHP = readFloat(EnemyHPPtr + 0x38) or 100.0
+            end
+
+            if EnemyHP &gt; 0.00 then
+              -- 陣營判斷
+              local EnemyCampPtr = readQword(enemyInstance + 0x340)
+              local EnemyFaction = 0
+
+              if EnemyCampPtr and EnemyCampPtr ~= 0 then
+                EnemyFaction = readInteger(EnemyCampPtr + 0x38) or 0
+              end
+
+              local shouldAim = false
+
+              if cachedSelfFaction == 0 then
+                shouldAim = true
+              elseif EnemyFaction ~= cachedSelfFaction then
+                shouldAim = true
+              end
+
+              -- 直接用坐标和距离算 (a, b, c)
+              if shouldAim then
+                local locationPtr = readQword(enemyInstance + 0x150)
+
+                if locationPtr and locationPtr ~= 0 then
+                  -- 直接讀取有符號整數
+                  local enemyX = readInteger(locationPtr + 0x2C8, true) or 0
+                  local enemyY = readInteger(locationPtr + 0x2CC, true) or 0
+                  local enemyZ = readInteger(locationPtr + 0x2D0, true) or 0
+
+                  -- 使用緩存的玩家位置
+                  if cachedPlayerX and cachedPlayerY and cachedPlayerZ then
+                    -- 計算相對位置
+                    local dx = enemyX - cachedPlayerX
+                    local dy = enemyY - cachedPlayerY
+                    local dz = enemyZ - cachedPlayerZ
+
+                    -- 計算總距離
+                    local dist = math.sqrt(dx*dx + dy*dy + dz*dz)
+
+                    -- 直接算 (a, b, c)
+                    local a = dx / dist
+                    local b = dy / dist
+                    local c = dz / dist
+
+                    -- 寫入三組值
+                    writeFloat("Xzhou", a)
+                    writeFloat("Yzhou", b)
+                    writeFloat("Zzhou", c)
+                    writeFloat("angle1", a)
+                    writeFloat("angle2", b)
+                    writeFloat("angle3", c)
+--                    local wall = readInteger("[libSandboxGame.dll+3E09C08]+88")
+--                    local myHP = readFloat("[[[libSandboxGame.dll+3E09C08]+1A0]+220]+38")
+--                    if wall == 2
+--                    then
+--                    if myHP &gt; 0.00
+--                    then
+--                    autoAssemble("createthread(Fire)")
+--                    sleep(40)
+--                    end
+--                    end
+                    foundValidEnemy = true
+                  end
+                end
+              end
+            end
+          end
+
+          -- 切換到下一個目標
+          _aim_index = _aim_index + 1
+          if _aim_index &gt;= cachedEnemyCount then
+            _aim_index = 1
+          end
+                    sleep(1)
+          attempts = attempts + 1
+        end
+      end
+    end
+  end
+end)
+
+[DISABLE]
+if LeftsuperLuaAutoClickForTriggerbot_thread then
+  LeftsuperLuaAutoClickForTriggerbot_thread.terminate()
+  LeftsuperLuaAutoClickForTriggerbot_thread.waitfor()
+  LeftsuperLuaAutoClickForTriggerbot_thread.destroy()
+  LeftsuperLuaAutoClickForTriggerbot_thread = nil
+  _aim_index = nil
+end
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1807689746</ID>
+                  <Description>"三角值1"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>angle1</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1807689748</ID>
+                  <Description>"三角值2"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>angle2</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1807689747</ID>
+                  <Description>"三角值3"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>angle3</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689629</ID>
+          <Description>"射擊速度"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>libSandboxGame.dll+3E09C08</Address>
+          <Offsets>
+            <Offset>20</Offset>
+            <Offset>38</Offset>
+            <Offset>EC0</Offset>
+            <Offset>1A0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689706</ID>
+          <Description>"Set to 1, You Can Infinite Jump"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>libSandboxGame.dll+3E09C08</Address>
+          <Offsets>
+            <Offset>124</Offset>
+            <Offset>150</Offset>
+            <Offset>1A0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689707</ID>
+          <Description>"My Move Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>libSandboxGame.dll+3E09C08</Address>
+          <Offsets>
+            <Offset>6C</Offset>
+            <Offset>170</Offset>
+            <Offset>1A0</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689765</ID>
+      <Description>"現代槍械指標"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>8 Bytes</VariableType>
+      <Address>libSandboxGame.dll+3E09C08</Address>
+      <Offsets>
+        <Offset>38</Offset>
+        <Offset>EC0</Offset>
+        <Offset>1A0</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

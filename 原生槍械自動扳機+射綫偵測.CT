@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1807689672</ID>
+      <Description>"静默自瞄初始化"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(YAW,4)
+registersymbol(YAW)
+alloc(PITCH,4)
+registersymbol(PITCH)
+[DISABLE]
+unregistersymbol(YAW)
+dealloc(YAW)
+unregistersymbol(PITCH)
+dealloc(PITCH)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1807689725</ID>
+          <Description>"主视角静默自瞄"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem2,1024,libSandboxGame.dll+2215C4D)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+newmem2:
+originalcode2:
+push rax
+mov rax,PITCH
+mov rax,[rax]
+mov ecx,rax
+pop rax
+mov [rbx],ecx
+exit2:
+jmp returnhere2
+libSandboxGame.dll+2215C4D:
+jmp newmem2
+returnhere2:
+alloc(newmem,1024,libSandboxGame.dll+2215C37)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+push rax
+mov rax,YAW
+movss xmm0,[rax]
+pop rax
+exit:
+jmp returnhere
+libSandboxGame.dll+2215C37:
+jmp newmem
+returnhere:
+[DISABLE]
+dealloc(newmem2)
+libSandboxGame.dll+2215C4D:
+db 8B 48 0C 89 0B
+//mov ecx,[rax+0C]
+//mov [rbx],ecx
+dealloc(newmem)
+libSandboxGame.dll+2215C37:
+db F3 0F 10 40 08
+//movss xmm0,[rax+08]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689722</ID>
+          <Description>"静默自瞄Lua(所有视角都有效,会自动计算所有敌对玩家的角度)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$Lua}
+if syntaxcheck then return end
+
+[ENABLE]
+if _aim_index == nil then
+  _aim_index = 1
+end
+
+-- 分開的Yaw和Pitch地址
+local YAW_ADDRESS = "YAW"   -- Yaw角度地址
+local PITCH_ADDRESS = "PITCH"  -- Pitch角度地址
+
+Aimbot_thread = createNativeThread(function (thread)
+  thread.freeOnTerminate(false)
+  thread.Name = 'Aimbot_thread'
+
+  -- 緩存玩家信息，減少重複讀取
+  local cachedSelfFaction = nil
+  local cachedPlayerX, cachedPlayerY, cachedPlayerZ = nil, nil, nil
+  local lastCacheUpdate = 0
+
+  -- 緩存敵人列表，減少讀取
+  local cachedPlayerList = nil
+  local cachedEnemyCount = nil
+
+  while not thread.Terminated do
+    -- 獲取敵人數量（緩存優化）
+    local enemyCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+
+    -- 檢查是否有有效敵人
+    if enemyCount and enemyCount &gt; 1 then
+      -- 定期更新緩存（每100ms）
+      local currentTime = getTickCount()
+      if currentTime - lastCacheUpdate &gt; 1 then
+        -- 更新玩家陣營緩存
+        local SelfCampPtr = readQword("[[libSandboxGame.dll++3E09C08]+1A0]+340")
+        if SelfCampPtr and SelfCampPtr ~= 0 then
+          cachedSelfFaction = readInteger(SelfCampPtr + 0x38) or 0
+        else
+          cachedSelfFaction = 0
+        end
+
+        -- 更新玩家位置緩存（直接讀取有符號整數）
+        local playerBase = readQword("[[libSandboxGame.dll+3E09C08]+1A0]+150")
+        if playerBase then
+          cachedPlayerX = readInteger(playerBase + 0x2C8, true) or 0
+          cachedPlayerY = readInteger(playerBase + 0x2CC, true) or 0
+          cachedPlayerZ = readInteger(playerBase + 0x2D0, true) or 0
+        end
+
+        -- 更新敵人列表緩存
+        cachedPlayerList = readQword("[[[[[libSandboxEngine.dll+1C3FE30]+240]+0]+28]+1F0]+38")
+        cachedEnemyCount = enemyCount
+
+        lastCacheUpdate = currentTime
+      end
+
+      -- 檢查緩存是否有效
+      if cachedPlayerList and cachedPlayerList ~= 0 then
+        local foundValidEnemy = false
+
+        -- 嘗試尋找有效敵人（最多嘗試5個）
+        local attempts = 0
+        local maxCount = readInteger("[libSandboxEngine.dll+1AD1800]+8")
+        local maxAttempts = math.min(enemyCount, maxCount)
+
+        while not foundValidEnemy and attempts &lt; maxAttempts and not thread.Terminated do
+          local enemyInstance = readQword(cachedPlayerList + _aim_index * 8)
+
+          if enemyInstance and enemyInstance ~= 0 then
+            -- 血量判斷
+            local EnemyHPPtr = readQword(enemyInstance + 0x220)
+            local EnemyHP = 100.0
+
+            if EnemyHPPtr and EnemyHPPtr ~= 0 then
+              EnemyHP = readFloat(EnemyHPPtr + 0x38) or 100.0
+            end
+
+            if EnemyHP &gt; 0.00 then
+              -- 陣營判斷
+              local EnemyCampPtr = readQword(enemyInstance + 0x340)
+              local EnemyFaction = 0
+
+              if EnemyCampPtr and EnemyCampPtr ~= 0 then
+                EnemyFaction = readInteger(EnemyCampPtr + 0x38) or 0
+              end
+
+              local shouldAim = false
+
+              if cachedSelfFaction == 0 then
+                shouldAim = true
+              elseif EnemyFaction ~= cachedSelfFaction then
+                shouldAim = true
+              end
+
+              -- 角度計算
+              if shouldAim then
+                local locationPtr = readQword(enemyInstance + 0x150)
+
+                if locationPtr and locationPtr ~= 0 then
+                  -- 直接讀取有符號整數
+                  local enemyX = readInteger(locationPtr + 0x2C8, true) or 0
+                  local enemyY = readInteger(locationPtr + 0x2CC, true) or 0
+                  local enemyZ = readInteger(locationPtr + 0x2D0, true) or 0
+
+                  -- 使用緩存的玩家位置
+                  if cachedPlayerX and cachedPlayerY and cachedPlayerZ then
+                    -- 計算相對位置
+                    local dx = enemyX - cachedPlayerX
+                    local dz = enemyZ - cachedPlayerZ
+                    local dy = enemyY - cachedPlayerY
+
+                    -- 計算水平距離平方（避免開方運算）
+                    local horizontalDist2 = dx*dx + dz*dz
+
+                    -- 設置最小距離閾值（避免零距離）
+                    if horizontalDist2 &gt; 1 then
+                      local horizontalDist = math.sqrt(horizontalDist2)
+
+                      -- 計算角度
+                      local aimYaw = math.atan2(dx, dz) * (180.0 / math.pi)
+                      if aimYaw &lt; 0 then
+                        aimYaw = aimYaw + 360.0
+                      end
+                      aimYaw = aimYaw % 360.0
+
+                      local aimPitch = -math.atan2(dy, horizontalDist) * (180.0 / math.pi)
+
+                      -- 限制Pitch範圍
+                      if aimPitch &lt; -88.0 then aimPitch = -88.0 end
+                      if aimPitch &gt; 88.0 then aimPitch = 88.0 end
+
+                      -- 🔥 角度轉三角值 (a, b, c)
+                      local radY = aimYaw * (math.pi / 180)
+                      local radP = aimPitch * (math.pi / 180)
+                      local cosP = math.cos(radP)
+                      local a = cosP * math.sin(radY)
+                      local b = -math.sin(radP)
+                      local c = cosP * math.cos(radY)
+
+                      -- 直接寫入角度
+                      writeFloat(YAW_ADDRESS, aimYaw)
+                      writeFloat(PITCH_ADDRESS, aimPitch)
+
+                      -- 🔥 寫入三個三角值
+                      writeFloat("Xzhou", a)
+                      writeFloat("Yzhou", b)
+                      writeFloat("Zzhou", c)
+
+                      foundValidEnemy = true
+                    end
+                  end
+                end
+              end
+            end
+          end
+                      sleep(1)
+          -- 切換到下一個目標
+          _aim_index = _aim_index + 1
+          if _aim_index &gt;= cachedEnemyCount then
+            _aim_index = 1
+          end
+
+          attempts = attempts + 1
+        end
+      end
+    end
+  end
+end)
+
+[DISABLE]
+if Aimbot_thread then
+  Aimbot_thread.terminate()
+  Aimbot_thread.waitfor()
+  Aimbot_thread.destroy()
+  Aimbot_thread = nil
+  _aim_index = nil
+end
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689728</ID>
+          <Description>"视角模式(0,主视角,3背视角)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>8 Bytes</VariableType>
+          <Address>libSandboxGame.dll+3E09C08</Address>
+          <Offsets>
+            <Offset>28</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1807689770</ID>
+          <Description>"整理射綫距離與方向"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048,"libSandboxEngine.dll"+822D24) 
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(Xzhou,8)
+registersymbol(Xzhou)
+alloc(Yzhou,8)
+registersymbol(Yzhou)
+alloc(Zzhou,8)
+registersymbol(Zzhou)
+newmem:
+originalcode:
+PUSH RAX
+PUSH RBX
+PUSH RCX
+mov rax,[Xzhou]
+mov rbx,[Yzhou]
+mov rcx,[Zzhou]
+mov [rbp-05],RAX//X轴矩阵角
+mov [rbp-01],RBX//Y轴矩阵角
+mov [rbp+03],RCX//Z轴矩阵角
+mov [rbp+07],4CABA950//距离
+POP RCX
+POP RBX
+POP RAX
+movss xmm3,[rbp+07]
+exit:
+jmp returnhere
+"libSandboxEngine.dll"+822D24:
+jmp newmem
+returnhere:
+[DISABLE]
+unregistersymbol(Xzhou)
+dealloc(Xzhou)
+unregistersymbol(Yzhou)
+dealloc(Yzhou)
+unregistersymbol(Zzhou)
+dealloc(Zzhou)
+dealloc(newmem)
+"libSandboxEngine.dll"+822D24:
+db F3 0F 10 5D 07
+//movss xmm3,[rbp+07]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1807689771</ID>
+              <Description>"射綫X軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Xzhou</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689772</ID>
+              <Description>"射綫Y軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Yzhou</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689773</ID>
+              <Description>"射綫Z軸偏角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>Zzhou</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689729</ID>
+              <Description>"当前瞄准的水平偏航角(如果不是主视角-180)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>YAW</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689730</ID>
+              <Description>"当前瞄准的俯仰偏航角"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>PITCH</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1807689774</ID>
+              <Description>"更優的自動扳機(判断队友)"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048,"libSandboxEngine.dll"+822ED7) 
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+cmp rax,2
+jne tuichu
+push rax
+push rbx
+push rcx
+push rdx
+push r8
+push r9
+push r10
+push r11
+push rdi
+lea rsp,[rsp-28]
+mov edx,1
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rcx,[rbx+EB8]
+cmp [rcx+38],0
+je fangbeng
+MOV RBX,libSandboxGame.dll+3E09C08
+MOV RBX,[RBX]
+MOV RBX,[RBX+1A0]
+mov rbx,[rbx+720]
+cmp rbx,0
+je fangbeng
+MOV r11,libSandboxGame.dll+3E09C08
+MOV r11,[r11]
+MOV r11,[r11+1A0]
+mov r11,[r11+340]
+mov r11,[r11+38]//自己
+mov rbx,[rbx+340]
+cmp  dword ptr [rbx+38],r11d
+je fangbeng//当自己和射线检测函数的阵营值相同时候跳过,也把自己与别人为0的时候也跳过开枪
+xor edx,edx
+mov rdi,libSandboxGame.dll+3E09C08
+mov rdi,[rdi]
+mov rdi,[rdi+1A0]
+mov rdi,[rdi+EB8]
+mov rcx,rdi
+call libSandboxGame.dll+23DC7E0
+fangbeng:
+lea rsp,[rsp+28]
+pop rdi
+pop r11
+pop r10
+pop r9
+pop r8
+pop rdx
+pop rcx
+pop rbx
+pop rax
+tuichu:
+lea r11,[rsp+000000A0]
+exit:
+jmp returnhere
+"libSandboxEngine.dll"+822ED7:
+jmp newmem
+nop 3
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"libSandboxEngine.dll"+822ED7:
+db 4C 8D 9C 24 A0 00 00 00
+//lea r11,[rsp+000000A0]
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689775</ID>
+      <Description>"自动瞄准判断"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>libiworld.dll+19949F0</Address>
+      <Offsets>
+        <Offset>20</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689776</ID>
+      <Description>"重新装填时间"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>libSandboxGame.dll+3E09C08</Address>
+      <Offsets>
+        <Offset>70</Offset>
+        <Offset>38</Offset>
+        <Offset>EB8</Offset>
+        <Offset>1A0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689780</ID>
+      <Description>"射击模式"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>libSandboxGame.dll+3E09C08</Address>
+      <Offsets>
+        <Offset>84</Offset>
+        <Offset>38</Offset>
+        <Offset>EB8</Offset>
+        <Offset>1A0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1807689779</ID>
+      <Description>"无后座"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+libSandboxGame.dll+23DC9EA:
+DB 77
+[DISABLE]
+libSandboxGame.dll+23DC9EA:
+DB 76
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
