@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Raycast Attribute(1.58.3)X64"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(VectorA,8)
+registersymbol(VectorA)
+alloc(VectorB,8)
+registersymbol(VectorB)
+alloc(VectorC,8)
+registersymbol(VectorC)
+alloc(Long,8)
+registersymbol(Long)
+Long:
+DD (float)100000.00
+alloc(newmem,2048,"libSandboxEngine.dll"+822D24) 
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+originalcode:
+push rax
+push rbx
+push rcx
+push rdx
+mov rax,VectorA
+mov eax,[rax]
+mov rbx,VectorB
+mov ebx,[rbx]
+mov rcx,VectorC
+mov ecx,[rcx]
+mov rdx,Long
+mov edx,[rdx]
+mov [rbp+07],edx//leng
+mov [rbp-05],eax//VectorA
+mov [rbp-01],ebx//VectorB
+mov [rbp+03],ecx//VectorC
+pop rdx
+pop rcx
+pop rbx
+pop rax
+movss xmm3,[rbp+07]
+exit:
+jmp returnhere
+"libSandboxEngine.dll"+822D24:
+jmp newmem
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"libSandboxEngine.dll"+822D24:
+db F3 0F 10 5D 07
+//movss xmm3,[rbp+07]
+unregistersymbol(VectorA)
+unregistersymbol(VectorB)
+unregistersymbol(VectorC)
+unregistersymbol(Long)
+dealloc(VectorA)
+dealloc(VectorB)
+dealloc(VectorC)
+dealloc(Long)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"VectorA"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>VectorA</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"VectorB"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>VectorB</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"VectorC"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>VectorC</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"Long"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>Long</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
